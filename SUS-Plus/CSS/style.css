@@ -4,7 +4,14 @@
 }
 
 header {
-    height: 10vh;
+    height: 8vh;
     width: 100%;
     background-color: #130598;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inicial img{
+    margin-left: 5px;
 }
