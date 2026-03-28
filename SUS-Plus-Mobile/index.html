@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>SUS+</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #1A0DFF;
+    --blue-dark: #1509cc;
+    --white: #ffffff;
+    --gray-light: #f5f5f5;
+    --gray: #888;
+    --text: #1a1a1a;
+    --border: #e8e8e8;
+    --red: #e74c3c;
+    --green: #27ae60;
+    --yellow: #f39c12;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: 'Nunito Sans', sans-serif;
+    background: #0d0d0d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+
+  .phone-frame {
+    width: 390px;
+    height: 844px;
+    background: #fff;
+    border-radius: 44px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 40px 120px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.1);
+  }
+
+  /* SCREENS */
+  .screen {
+    position: absolute;
+    inset: 0;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .screen.active { display: flex; }
+
+  /* ============ SPLASH ============ */
+  #screen-splash {
+    background: #fff;
+    align-items: center;
+    justify-content: center;
+    animation: splashFade 0.6s ease;
+  }
+  @keyframes splashFade { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: scale(1); } }
+
+  .sus-logo {
+    width: 180px;
+    height: 60px;
+  }
+
+
+  /* ============ ONBOARDING ============ */
+  .onboard-screen {
+    background: var(--blue);
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    animation: slideIn 0.4s ease;
+    position: relative;
+  }
+  @keyframes slideIn { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+
+  /* Logo topo esquerdo */
+  .onboard-logo {
+    position: absolute;
+    top: 52px;
+    left: 28px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 26px;
+    letter-spacing: -1px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    z-index: 2;
+  }
+  .onboard-logo .plus { font-size: 30px; }
+
+  /* Área central de imagem — ocupa metade superior */
+  .onboard-image-area {
+    width: 100%;
+    height: 52%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Placeholder visual quando não há imagem real */
+  .onboard-image-placeholder {
+    width: 260px;
+    height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .onboard-image-placeholder svg { width: 100%; height: 100%; }
+
+  /* Parte inferior com texto, dots e botão */
+  .onboard-bottom {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 32px 44px;
+    text-align: center;
+  }
+
+  .onboard-content { display: flex; flex-direction: column; gap: 14px; }
+  .onboard-content h2 { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 26px; line-height: 1.2; }
+  .onboard-content p { font-size: 14px; line-height: 1.65; opacity: 0.88; font-weight: 400; }
+
+  .dots { display: flex; gap: 8px; justify-content: center; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.35); transition: all 0.3s; }
+  .dot.active { background: #fff; width: 24px; border-radius: 4px; }
+
+  .btn-primary {
+    width: 100%;
+    padding: 18px;
+    border-radius: 100px;
+    border: none;
+    background: #fff;
+    color: var(--blue);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    flex-shrink: 0;
+  }
+  .btn-primary:active { transform: scale(0.97); }
+
+  .btn-blue {
+    background: var(--blue);
+    color: #fff;
+  }
+
+  /* ============ LOGIN / REGISTER ============ */
+  .auth-screen {
+    background: #fff;
+    flex-direction: column;
+    align-items: center;
+    padding: 48px 32px 32px;
+    gap: 8px;
+    overflow-y: auto;
+    animation: fadeUp 0.3s ease;
+  }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+
+
+  .form-group { width: 100%; display: flex; flex-direction: column; gap: 4px; margin-bottom: 8px; }
+  .form-group label { font-size: 12px; font-weight: 700; color: var(--gray); text-transform: uppercase; letter-spacing: 0.5px; }
+  .form-group input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    font-size: 15px;
+    font-family: 'Nunito Sans', sans-serif;
+    color: var(--text);
+    background: var(--gray-light);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-group input:focus { border-color: var(--blue); background: #fff; }
+
+  .terms-check { display: flex; align-items: center; gap: 10px; width: 100%; margin: 8px 0 16px; }
+  .terms-check input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--blue); cursor: pointer; }
+  .terms-check label { font-size: 13px; color: var(--gray); cursor: pointer; }
+  .terms-check a { color: var(--blue); font-weight: 700; text-decoration: none; }
+
+  .auth-switch { font-size: 13px; color: var(--gray); margin-top: 12px; }
+  .auth-switch a { color: var(--blue); font-weight: 700; cursor: pointer; text-decoration: none; }
+
+  .forgot-link { font-size: 13px; color: var(--blue); font-weight: 600; cursor: pointer; align-self: flex-end; margin-top: -4px; margin-bottom: 8px; }
+
+  /* ============ HOME ============ */
+  #screen-home {
+    background: #f0f2ff;
+    flex-direction: column;
+  }
+
+  .home-header {
+    background: var(--blue);
+    padding: 52px 24px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .home-header::after {
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: #f0f2ff;
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  }
+
+
+  .icon-btn { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.2); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #fff; }
+
+  .user-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+    gap: 6px;
+  }
+  .user-avatar {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: linear-gradient(135deg, #a8edea, #fed6e3);
+    border: 3px solid rgba(255,255,255,0.5);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+    overflow: hidden;
+  }
+  .user-name { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 16px; letter-spacing: 0.5px; }
+  .user-cpf { font-size: 12px; opacity: 0.75; letter-spacing: 1px; }
+
+  .home-body { flex: 1; overflow-y: auto; padding: 8px 20px 20px; display: flex; flex-direction: column; gap: 20px; }
+
+  .section-header { display: flex; justify-content: space-between; align-items: center; }
+  .section-title { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 16px; color: var(--text); }
+  .section-link { font-size: 13px; color: var(--blue); font-weight: 700; cursor: pointer; }
+
+  /* Consulta card */
+  .consulta-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 4px 20px rgba(26,13,255,0.08);
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+  .consulta-card:active { transform: scale(0.98); }
+  .consulta-icon { width: 48px; height: 48px; border-radius: 14px; background: #eef0ff; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+  .consulta-info { flex: 1; }
+  .consulta-info strong { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 14px; color: var(--text); display: block; }
+  .consulta-info span { font-size: 12px; color: var(--gray); display: block; margin-top: 2px; }
+  .consulta-info .doctor { font-size: 12px; color: var(--gray); display: flex; align-items: center; gap: 4px; margin-top: 4px; }
+  .btn-sm { padding: 8px 16px; border-radius: 100px; border: none; background: var(--blue); color: #fff; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 12px; cursor: pointer; white-space: nowrap; }
+
+  /* Serviços */
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .service-item {
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .service-item:active { transform: scale(0.95); box-shadow: 0 1px 6px rgba(0,0,0,0.08); }
+  .service-icon { width: 48px; height: 48px; border-radius: 14px; background: #eef0ff; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+  .service-item span { font-size: 11px; font-weight: 700; color: var(--text); text-align: center; line-height: 1.3; }
+
+  /* Novidades */
+  .news-card {
+    border-radius: 20px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #0033cc, #002299);
+    padding: 20px;
+    color: #fff;
+    cursor: pointer;
+    position: relative;
+  }
+  .news-badge { display: inline-block; background: #ffd700; color: #222; font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 100px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .news-card h3 { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 20px; line-height: 1.2; }
+  .news-card p { font-size: 12px; opacity: 0.8; margin-top: 6px; }
+  .news-emoji { position: absolute; right: 16px; bottom: 16px; font-size: 42px; opacity: 0.6; }
+
+  /* ============ CONSULTAS ============ */
+  #screen-consultas {
+    background: #f0f2ff;
+    flex-direction: column;
+  }
+  .page-header {
+    background: #fff;
+    padding: 56px 20px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .back-btn { width: 36px; height: 36px; border-radius: 50%; background: var(--gray-light); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--text); }
+  .page-title { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 18px; color: var(--text); }
+
+  .consultas-body { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 8px; }
+  .consultas-section-title { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 15px; color: var(--text); margin: 8px 0 4px; }
+
+  .consulta-list-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+  .consulta-list-card:active { transform: scale(0.98); }
+
+  .btn-reagendar { width: 100%; padding: 10px; border-radius: 100px; border: 1.5px solid var(--blue); background: transparent; color: var(--blue); font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 8px; }
+
+  /* ============ BOTTOM NAV ============ */
+  .bottom-nav {
+    background: #fff;
+    border-top: 1px solid var(--border);
+    display: flex;
+    padding: 10px 0 20px;
+  }
+  .nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    padding: 6px;
+    border: none;
+    background: none;
+    transition: transform 0.15s;
+  }
+  .nav-item:active { transform: scale(0.9); }
+  .nav-icon { font-size: 22px; }
+  .nav-label { font-size: 10px; font-weight: 700; color: var(--gray); }
+  .nav-item.active .nav-label { color: var(--blue); }
+  .nav-item.active .nav-icon { filter: none; }
+
+  /* ============ TRANSITIONS ============ */
+  .fade-enter { animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 0; }
+
+  /* ============ NOTIFICATION ============ */
+  .toast {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    background: var(--text);
+    color: #fff;
+    padding: 14px 18px;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    z-index: 100;
+    display: none;
+    animation: toastIn 0.3s ease;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+  @keyframes toastIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+
+  .img1 {
+    width: 320px;
+    height: 320px;
+    position: fixed;
+    top: 271px;
+  }
+  .img2 {
+    width: 320px;
+    height: 320px;
+    position: fixed;
+    top: 271px;
+  }
+
+  .img3 {
+    width: 320px;
+    height: 320px;
+    position: fixed;
+    top: 271px;
+  }
+</style>
+</head>
+<body>
+
+<div class="phone-frame">
+  <div class="toast" id="toast"></div>
+
+  <!-- SPLASH -->
+  <div class="screen active" id="screen-splash">
+    <img class="sus-logo" src="../img/suslogo.png" alt="">
+  </div>
+
+  <!-- ONBOARD 1 -->
+  <div class="screen" id="screen-onboard1">
+    <div class="onboard-screen" style="display:flex;">
+      <!-- Logo topo esquerdo -->
+      <div class="onboard-logo">SUS<span class="plus">+</span></div>
+
+      <!-- Área central para imagem -->
+      <div class="onboard-image-area">
+        <div class="onboard-image-placeholder">
+         <img class="img1" src="img/inicio1.png" alt="">
+        </div>
+      </div>
+
+      <!-- Parte inferior -->
+      <div class="onboard-bottom">
+        <div class="onboard-content">
+          <h2>Foco em Praticidade e Cuidado</h2>
+          <p>Navegue entre dicas de conscientização sobre doenças e animais peçonhentos ou acesse diretamente áreas especializadas para agendamentos e atendimentos.</p>
+        </div>
+        <div class="dots">
+          <div class="dot active"></div><div class="dot"></div><div class="dot"></div>
+        </div>
+        <button class="btn-primary" onclick="showScreen('screen-onboard2')">Prosseguir</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ONBOARD 2 -->
+  <div class="screen" id="screen-onboard2">
+    <div class="onboard-screen" style="display:flex;">
+      <div class="onboard-logo">SUS<span class="plus">+</span></div>
+
+      <div class="onboard-image-area">
+        <div class="onboard-image-placeholder">
+            <img class="img1" src="img/inicio2.png" alt="">
+        </div>
+      </div>
+
+      <div class="onboard-bottom">
+        <div class="onboard-content">
+          <h2>Agilidade no Agendamento</h2>
+          <p>Escolha entre atendimento presencial ou teleconsultas com poucos cliques. Gerencie seus horários e receba confirmações em tempo real, sem filas e sem complicações.</p>
+        </div>
+        <div class="dots">
+          <div class="dot"></div><div class="dot active"></div><div class="dot"></div>
+        </div>
+        <button class="btn-primary" onclick="showScreen('screen-onboard3')">Prosseguir</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ONBOARD 3 -->
+  <div class="screen" id="screen-onboard3">
+    <div class="onboard-screen" style="display:flex;">
+      <div class="onboard-logo">SUS<span class="plus">+</span></div>
+
+      <div class="onboard-image-area">
+        <div class="onboard-image-placeholder">
+            <img class="img1" src="img/inicio3.png" alt="">
+        </div>
+      </div>
+
+      <div class="onboard-bottom">
+        <div class="onboard-content">
+          <h2>Seu Histórico Sempre à Mão</h2>
+          <p>Acesse resultados de exames, prescrições médicas, dicas, instruções e até seu histórico de vacinação de forma segura. O cuidado com a sua saúde continua mesmo após a consulta.</p>
+        </div>
+        <div class="dots">
+          <div class="dot"></div><div class="dot"></div><div class="dot active"></div>
+        </div>
+        <button class="btn-primary" onclick="showScreen('screen-register')">Prosseguir</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- REGISTER -->
+  <div class="screen" id="screen-register">
+    <div class="auth-screen" style="display:flex;">
+      <h1>Criar Conta</h1>
+      <img class="sus-logo" src="img/suslogo.png" alt="">
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="seuemail@exemplo.com" id="reg-email">
+      </div>
+      <div class="form-group">
+        <label>CPF</label>
+        <input type="text" placeholder="000.000.000-00" id="reg-cpf" maxlength="14">
+      </div>
+      <div class="form-group">
+        <label>Senha</label>
+        <input type="password" placeholder="••••••••••••••" id="reg-senha">
+      </div>
+      <div class="form-group">
+        <label>Confirma Senha</label>
+        <input type="password" placeholder="••••••••••••••" id="reg-confirma">
+      </div>
+      <div class="terms-check">
+        <input type="checkbox" id="reg-terms">
+        <label for="reg-terms">Li e concordo com os termos do <a href="#">Contrato de Usuário</a>.</label>
+      </div>
+      <button class="btn-primary btn-blue" onclick="doRegister()">Criar Conta</button>
+      <p class="auth-switch">Já tem conta? <a onclick="showScreen('screen-login')">Fazer Login</a></p>
+    </div>
+  </div>
+
+  <!-- LOGIN -->
+  <div class="screen" id="screen-login">
+    <div class="auth-screen" style="display:flex;">
+      <h1>Login</h1>
+      <div class="sus-logo"><span>S</span><span>U</span><span>S</span><span></span><span class="plus">+</span></div>
+      <div class="form-group">
+        <label>CPF</label>
+        <input type="text" placeholder="000.000.000-00" id="login-cpf" value="000.000.000-00">
+      </div>
+      <div class="form-group">
+        <label>Senha</label>
+        <input type="password" placeholder="••••••••••••••" id="login-senha" value="12345678">
+      </div>
+      <span class="forgot-link">Esqueceu a senha? <a href="#">Clique aqui</a></span>
+      <div class="terms-check">
+        <input type="checkbox" id="login-terms" checked>
+        <label for="login-terms">Li e concordo com os termos do <a href="#">Contrato de Usuário</a>.</label>
+      </div>
+      <button class="btn-primary btn-blue" onclick="doLogin()">Login</button>
+      <p class="auth-switch">Não tem conta? <a onclick="showScreen('screen-register')">Cadastre-se</a></p>
+    </div>
+  </div>
+
+  <!-- HOME -->
+  <div class="screen" id="screen-home">
+    <div class="home-header">
+      <div class="home-header-top">
+        <div class="sus-logo-sm"><span>S</span><span>U</span><span>S</span><span></span><span class="plus">+</span></div>
+        <button class="icon-btn" onclick="showToast('🔍 Busca em desenvolvimento')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </button>
+      </div>
+      <div class="user-card">
+        <div class="user-avatar">👤</div>
+        <div class="user-name">GABRIEL DA SILVA BEZERRA</div>
+        <div class="user-cpf">000.000.000-00</div>
+      </div>
+    </div>
+
+    <div class="home-body">
+      <div>
+        <div class="section-header">
+          <span class="section-title">Última consulta</span>
+          <span class="section-link" onclick="showScreen('screen-consultas')">Ver todos</span>
+        </div>
+        <div style="margin-top:10px">
+          <div class="consulta-card">
+            <div class="consulta-icon">🏥</div>
+            <div class="consulta-info">
+              <strong>Primeiros socorros</strong>
+              <span>20 de março, às 13:30</span>
+              <span>A.M.E – Universidade de Marília</span>
+              <span class="doctor">👩‍⚕️ Dr. Natalie Bennett</span>
+            </div>
+            <button class="btn-sm" onclick="showToast('📋 Detalhes da consulta')">Ver mais</button>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-header">
+          <span class="section-title">Serviços</span>
+          <span class="section-link" onclick="showToast('📋 Todos os serviços')">Ver todos</span>
+        </div>
+        <div class="services-grid" style="margin-top:10px">
+          <div class="service-item" onclick="showToast('🚑 Primeiros Socorros')">
+            <div class="service-icon">🚑</div>
+            <span>Primeiros socorros</span>
+          </div>
+          <div class="service-item" onclick="showToast('🦟 Dengue')">
+            <div class="service-icon">🦟</div>
+            <span>Dengue</span>
+          </div>
+          <div class="service-item" onclick="showToast('🦂 Escorpião')">
+            <div class="service-icon">🦂</div>
+            <span>Escorpião</span>
+          </div>
+          <div class="service-item" onclick="showToast('💉 Vacinação')">
+            <div class="service-icon">💉</div>
+            <span>Vacinação</span>
+          </div>
+          <div class="service-item" onclick="showToast('📋 Exames')">
+            <div class="service-icon">📋</div>
+            <span>Exames</span>
+          </div>
+          <div class="service-item" onclick="showToast('🩺 Teleconsulta')">
+            <div class="service-icon">🩺</div>
+            <span>Teleconsulta</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-header">
+          <span class="section-title">Novidades</span>
+          <span class="section-link" onclick="showToast('📰 Todas as novidades')">Ver todos</span>
+        </div>
+        <div class="news-card" style="margin-top:10px" onclick="showToast('💉 Campanha de vacinação')">
+          <div class="news-badge">Campanha 2025</div>
+          <h3>VACINAR É CUIDAR DE QUEM VOCÊ AMA.</h3>
+          <p>Vacina segura — proteja sua família agora</p>
+          <div class="news-emoji">💉</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-nav">
+      <button class="nav-item active" onclick="setNav(this, 'screen-home')">
+        <span class="nav-icon">🏠</span>
+        <span class="nav-label">Início</span>
+      </button>
+      <button class="nav-item" onclick="setNav(this, 'screen-consultas')">
+        <span class="nav-icon">📅</span>
+        <span class="nav-label">Consultas</span>
+      </button>
+      <button class="nav-item" onclick="showToast('👤 Perfil em desenvolvimento')">
+        <span class="nav-icon">👤</span>
+        <span class="nav-label">Perfil</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- CONSULTAS -->
+  <div class="screen" id="screen-consultas">
+    <div class="page-header">
+      <button class="back-btn" onclick="showScreen('screen-home')">←</button>
+      <span class="page-title">Última consulta</span>
+    </div>
+
+    <div class="consultas-body">
+      <div class="consultas-section-title">Próximas</div>
+
+      <div class="consulta-list-card">
+        <div class="consulta-icon" style="width:44px;height:44px;border-radius:12px;background:#eef0ff;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">🏥</div>
+        <div class="consulta-info" style="flex:1">
+          <strong>Primeiros socorros</strong>
+          <span>20 de março, às 13:30</span>
+          <span>A.M.E – Universidade de Marília</span>
+          <span class="doctor" style="font-size:12px;color:var(--gray);display:flex;align-items:center;gap:4px;margin-top:4px;">👩‍⚕️ Dr. Natalie Bennett</span>
+        </div>
+        <button class="btn-sm">Ver mais</button>
+      </div>
+
+      <div class="consultas-section-title" style="margin-top:8px">Recentes</div>
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="background:#fff;border-radius:16px;padding:14px;box-shadow:0 2px 10px rgba(0,0,0,0.05);">
+          <div class="consulta-list-card" style="background:transparent;padding:0;box-shadow:none;">
+            <div class="consulta-icon" style="width:44px;height:44px;border-radius:12px;background:#eef0ff;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">🏥</div>
+            <div class="consulta-info" style="flex:1">
+              <strong>Primeiros socorros</strong>
+              <span>20 de março, às 13:30</span>
+              <span>A.M.E – Universidade de Marília</span>
+              <span class="doctor" style="font-size:12px;color:var(--gray);">👩‍⚕️ Dr. Natalie Bennett</span>
+            </div>
+            <button class="btn-sm" onclick="showToast('📋 Detalhes da consulta')">Ver mais</button>
+          </div>
+          <button class="btn-reagendar" onclick="showToast('🔄 Reagendamento solicitado!')">🔄 Reagendar</button>
+        </div>
+
+        <div style="background:#fff;border-radius:16px;padding:14px;box-shadow:0 2px 10px rgba(0,0,0,0.05);">
+          <div class="consulta-list-card" style="background:transparent;padding:0;box-shadow:none;">
+            <div class="consulta-icon" style="width:44px;height:44px;border-radius:12px;background:#eef0ff;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">🏥</div>
+            <div class="consulta-info" style="flex:1">
+              <strong>Primeiros socorros</strong>
+              <span>20 de março, às 13:30</span>
+              <span>A.M.E – Universidade de Marília</span>
+              <span class="doctor" style="font-size:12px;color:var(--gray);">👩‍⚕️ Dr. Natalie Bennett</span>
+            </div>
+            <button class="btn-sm" onclick="showToast('📋 Detalhes da consulta')">Ver mais</button>
+          </div>
+          <button class="btn-reagendar" onclick="showToast('🔄 Reagendamento solicitado!')">🔄 Reagendar</button>
+        </div>
+      </div>
+
+      <div class="consultas-section-title" style="margin-top:8px">Todos</div>
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="background:#fff;border-radius:16px;padding:14px;box-shadow:0 2px 10px rgba(0,0,0,0.05);">
+          <div class="consulta-list-card" style="background:transparent;padding:0;box-shadow:none;">
+            <div class="consulta-icon" style="width:44px;height:44px;border-radius:12px;background:#eef0ff;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">🏥</div>
+            <div class="consulta-info" style="flex:1">
+              <strong>Primeiros socorros</strong>
+              <span>20 de março, às 13:30</span>
+              <span>A.M.E – Universidade de Marília</span>
+              <span class="doctor" style="font-size:12px;color:var(--gray);">👩‍⚕️ Dr. Natalie Bennett</span>
+            </div>
+            <button class="btn-sm" onclick="showToast('📋 Detalhes da consulta')">Ver mais</button>
+          </div>
+          <button class="btn-reagendar" onclick="showToast('🔄 Reagendamento solicitado!')">🔄 Reagendar</button>
+        </div>
+
+        <div style="background:#fff;border-radius:16px;padding:14px;box-shadow:0 2px 10px rgba(0,0,0,0.05);">
+          <div class="consulta-list-card" style="background:transparent;padding:0;box-shadow:none;">
+            <div class="consulta-icon" style="width:44px;height:44px;border-radius:12px;background:#eef0ff;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">🏥</div>
+            <div class="consulta-info" style="flex:1">
+              <strong>Primeiros socorros</strong>
+              <span>20 de março, às 13:30</span>
+              <span>A.M.E – Universidade de Marília</span>
+              <span class="doctor" style="font-size:12px;color:var(--gray);">👩‍⚕️ Dr. Natalie Bennett</span>
+            </div>
+            <button class="btn-sm" onclick="showToast('📋 Detalhes da consulta')">Ver mais</button>
+          </div>
+          <button class="btn-reagendar" onclick="showToast('🔄 Reagendamento solicitado!')">🔄 Reagendar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-nav">
+      <button class="nav-item" onclick="setNav(this, 'screen-home')">
+        <span class="nav-icon">🏠</span>
+        <span class="nav-label">Início</span>
+      </button>
+      <button class="nav-item active" onclick="setNav(this, 'screen-consultas')">
+        <span class="nav-icon">📅</span>
+        <span class="nav-label">Consultas</span>
+      </button>
+      <button class="nav-item" onclick="showToast('👤 Perfil em desenvolvimento')">
+        <span class="nav-icon">👤</span>
+        <span class="nav-label">Perfil</span>
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let toastTimer;
+
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+
+  function setNav(btn, screenId) {
+    const nav = btn.closest('.bottom-nav');
+    nav.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    btn.classList.add('active');
+    showScreen(screenId);
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.style.display = 'block';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.style.display = 'none', 2500);
+  }
+
+  function doLogin() {
+    const cpf = document.getElementById('login-cpf').value;
+    const senha = document.getElementById('login-senha').value;
+    if (!cpf || !senha) { showToast('⚠️ Preencha todos os campos'); return; }
+    showToast('✅ Login realizado com sucesso!');
+    setTimeout(() => showScreen('screen-home'), 600);
+  }
+
+  function doRegister() {
+    const email = document.getElementById('reg-email').value;
+    const cpf = document.getElementById('reg-cpf').value;
+    const senha = document.getElementById('reg-senha').value;
+    const confirma = document.getElementById('reg-confirma').value;
+    const terms = document.getElementById('reg-terms').checked;
+    if (!email || !cpf || !senha || !confirma) { showToast('⚠️ Preencha todos os campos'); return; }
+    if (senha !== confirma) { showToast('⚠️ Senhas não conferem'); return; }
+    if (!terms) { showToast('⚠️ Aceite os termos para continuar'); return; }
+    showToast('✅ Conta criada! Faça seu login.');
+    setTimeout(() => showScreen('screen-login'), 800);
+  }
+
+  // CPF mask
+  document.querySelectorAll('[placeholder="000.000.000-00"]').forEach(input => {
+    input.addEventListener('input', function() {
+      let v = this.value.replace(/\D/g, '');
+      if (v.length > 11) v = v.slice(0, 11);
+      v = v.replace(/(\d{3})(\d)/, '$1.$2');
+      v = v.replace(/(\d{3})\.(\d{3})(\d)/, '$1.$2.$3');
+      v = v.replace(/(\d{3})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3-$4');
+      this.value = v;
+    });
+  });
+
+  // Auto-advance from splash
+  setTimeout(() => showScreen('screen-onboard1'), 1800);
+</script>
+</body>
+</html>

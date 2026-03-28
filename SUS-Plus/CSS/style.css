@@ -3,15 +3,47 @@
     padding: 0;
 }
 
+body {
+    background-color: #dedefe;
+}
+
 header {
-    height: 8vh;
+    height: 10vh;
     width: 100%;
     background-color: #130598;
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
+    position: fixed;
+    top: 0%;
+    left: 0%;
 }
 
 .inicial img{
     margin-left: 5px;
 }
+
+.inicial {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.organizador {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 60%;
+}
+
+.conteudo {
+    background-color: #f0f0fe;
+    width: 80vw;
+    margin: 15vh auto;
+    height: 90vh;
+    border-radius: 15px;
+    padding: 20px;
+}
+
