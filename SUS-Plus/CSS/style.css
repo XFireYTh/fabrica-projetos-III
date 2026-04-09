@@ -15,7 +15,7 @@ header {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    position: fixed;
+    position: sticky;
     top: 0%;
     left: 0%;
 }
@@ -41,8 +41,8 @@ header {
 .conteudo {
     background-color: #f0f0fe;
     width: 80vw;
-    margin: 15vh auto;
-    height: 1000px;
+    margin: 5vh auto;
+    height: 1200px;
     border-radius: 15px;
     padding: 20px;
 }
