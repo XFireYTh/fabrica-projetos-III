@@ -2,7 +2,7 @@
 
 .anuncios {
     width: 100%;
-    height: 35vh;
+    height: 350px;
     background-color: aqua;
 }
 
@@ -11,7 +11,7 @@
 
 .concientizacao {
     width: 100%;
-    height: 20vh;
+    height: 200px;
     background-color: gainsboro;
     margin-top: 10px;
     display: flex;
@@ -19,8 +19,42 @@
     align-items: center;
 }
 
+.config_link {
+    text-decoration: none;
+}
+
 .opcaocons {
-    width: 18vw;
-    height: 18vh;
+    width: 20vw;
+    height: 180px;
     background-color: antiquewhite;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 5px;
+    transition: .4s;
+}
+
+.opcaocons img {
+    width: 85px;
+}
+
+#cssid_opc1 {
+    background-color: #1503c7;
+}
+
+.central_info {
+    width: 50%;
+    text-align: center;
+}
+
+.title_cons, .desc_cons {
+    color: white;
+}
+
+.title_cons {
+    font-weight: 1000;
+    font-size: 20px;
 }
