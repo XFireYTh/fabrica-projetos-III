@@ -30,14 +30,14 @@
     border-radius: 20px;
     display: flex;
     flex-direction: row;
+    flex-wrap: nowrap;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
+    justify-content: space-around;
     padding: 5px;
     transition: .4s;
 }
 
-.opcaocons img {
+.icon_cons {
     width: 85px;
 }
 
@@ -45,16 +45,36 @@
     background-color: #1503c7;
 }
 
+#cssid_opc2 {
+    background-color: #00ad00;
+}
+
+#cssid_opc3 {
+    background-color: #da2a2a;
+}
+
 .central_info {
     width: 50%;
     text-align: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3px;
 }
 
 .title_cons, .desc_cons {
     color: white;
+    text-align: center;
 }
 
 .title_cons {
     font-weight: 1000;
-    font-size: 20px;
+    font-size: 24px;
+    display: inline;
+}
+
+.desc_cons {
+    font-weight: 500;
+    font-size: 18px;
 }
