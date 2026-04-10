@@ -106,14 +106,13 @@
 }
 
 .age_cal {
-    background-color: bisque;
+    background-color: #fafafa;
     width: 35%;
     height: 100%;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-
 }
 
 .age_cal .head_resumo {
@@ -168,4 +167,65 @@
 
 .dia_direito {
     border-bottom-right-radius: 20px;
+}
+
+/*--- Agenda ---*/
+
+.agendamento {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding-top: 10px;
+}
+
+.agendamento>li {
+    list-style: none;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 20px;
+}
+
+.data_agenda * {
+    margin: 0;
+    padding: 0;
+}
+
+.data_agenda {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px;
+    background-color: #250ef3;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    border-radius: 50%;
+    gap: 5px;
+    line-height: 0.9;
+}
+
+.dia_agenda {
+    font-weight: 700;
+    font-size: 24px;
+    display: inline;
+    max-height: fit-content;
+}
+
+.mes_agenda {
+    font-weight: 600;
+    font-size: 18px;
+    display: inline;
+    max-height: fit-content;
+}
+
+.detalhes_agenda_resumo {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid rgba(0,0,0,0.5);
+    width: 65%;
+    justify-content: center;
 }
