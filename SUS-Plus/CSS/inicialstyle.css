@@ -98,7 +98,7 @@
 .agenda_resumo {
     height: 40vh;
     width: 100%;
-    margin-top: 10px;
+    margin-top: 50px;
     padding: 5px;
     display: flex;
     flex-direction: row;
@@ -128,9 +128,44 @@
     padding: 0 15px;
 }
 
-.head_resumo .nome_resumo {
+.head_resumo .nome_resumo, #mes_resumo {
     color: #efefef;
     text-align: left;
     font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
 }
 
+/*--- Calendário ---*/
+
+#dias_semana {
+    text-align: center;
+    background-color: lightgray;
+    color: #171717
+}
+
+.final_semana_head {
+    color: #da2a2a;
+}
+
+#dias_resumo {
+    height: 100%;
+    width: 100%;
+}
+
+#dias_resumo tr td {
+    color: #000;
+    background-color: #fafafa;
+    width: 8%;
+    height: 10%;
+    padding: 2.5% 5%;
+    text-align: start;
+    font-size: 22px;
+}
+
+.dia_esquerdo {
+    border-bottom-left-radius: 20px;
+}
+
+.dia_direito {
+    border-bottom-right-radius: 20px;
+}

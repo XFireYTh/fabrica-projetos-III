@@ -43,8 +43,8 @@ header {
     background-color: #f0f0fe;
     width: 80vw;
     margin: 5vh auto;
-    height: 1200px;
+    height: fit-content;
     border-radius: 15px;
-    padding: 20px;
+    padding: 30px 20px;
 }
 
