@@ -27,7 +27,7 @@
                     <img src="resources/images/Group 20.png" alt="Anuncio-Test">
                 </div>
                 <div class="concientizacao">
-                    <a href="./conscientizacao.html" class="config_link" id="conscientizacao">
+                    <a href="./conscientizacao/" class="config_link" id="conscientizacao">
                         <div class="opcaocons" id="cssid_opc1">
                             <img class="icon_cons" src="resources/images/advertising.png" alt="advertising">
                             <div class="central_info">
@@ -36,7 +36,7 @@
                             </div>
                         </div>
                     </a>
-                    <a href="#" class="config_link" id="conscientizacao">
+                    <a href="agendamento/" class="config_link" id="agendamento">
                         <div class="opcaocons" id="cssid_opc2">
                             <img src="resources/images/calendar.png" alt="advertising">
                             <div class="central_info">
@@ -45,7 +45,7 @@
                             </div>
                         </div>
                     </a>
-                    <a href="#" class="config_link" id="conscientizacao">
+                    <a href="agendamento/urgencia/" class="config_link" id="urgencia">
                         <div class="opcaocons" id="cssid_opc3">
                             <img src="resources/images/siren.png" alt="advertising">
                             <div class="central_info">
@@ -56,15 +56,31 @@
                     </a>
                 </div>
                 <div class="agenda_resumo">
-                    <div class="calendario">
+                    <div class="age_cal" id="calendario_id">
                         <div class="head_resumo" id="r_cal">
-
+                            <h3 class="nome_resumo">Calendário</h3>
+                            <h4 id="mes_resumo"></h4>
                         </div>
+                        <table id="calendario">
+                            <thead>
+                                <th>Dom</th>
+                                <th>Seg</th>
+                                <th>Ter</th>
+                                <th>Qua</th>
+                                <th>Qui</th>
+                                <th>Sex</th>
+                                <th>Sab</th>
+                            </thead>
+                            <tbody id="dias_resumo">
+                                <!-- Tudo aqui é gerado via Javascript -->
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="agenda">
+                    <div class="age_cal" id="agenda_id">
                         <div class="head_resumo" id="r_age">
-
+                            <h3 class="nome_resumo">Agenda</h3>
                         </div>
+                        <ul class="agendamento"></ul>
                     </div>
                 </div>
             </div>

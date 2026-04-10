@@ -43,6 +43,14 @@
     transition: .4s;
 }
 
+.opcaocons:hover {
+    box-shadow: 0 4px 8px gray;
+}
+
+.opcaocons:active {
+    transform: translateY(1px);
+}
+
 .icon_cons {
     width: 85px;
 }
@@ -84,3 +92,45 @@
     font-weight: 500;
     font-size: 18px;
 }
+
+/*--- Aba Agenda Resumo ---*/
+
+.agenda_resumo {
+    height: 40vh;
+    width: 100%;
+    margin-top: 10px;
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.age_cal {
+    background-color: bisque;
+    width: 35%;
+    height: 100%;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+
+}
+
+.age_cal .head_resumo {
+    width: 100%;
+    background-color: #1503c7;
+    height: 20%;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
+}
+
+.head_resumo .nome_resumo {
+    color: #efefef;
+    text-align: left;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
