@@ -222,6 +222,11 @@
     max-height: fit-content;
 }
 
+.detalhes_agenda_resumo * {
+    margin: 0;
+    padding: 0;
+}
+
 .detalhes_agenda_resumo {
     display: flex;
     flex-direction: column;
